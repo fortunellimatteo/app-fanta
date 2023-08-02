@@ -1,0 +1,256 @@
+openapi: 3.0.3
+info:
+  title: Swagger Fanta - OpenAPI 1.0
+  description: |-
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: fortunellimatteo@gmail.com
+  version: 1.0.0
+paths:
+  /leghe/maxId:
+    get:
+      tags:
+        - leghe
+      summary: Returns max id from leghe table
+      description: Returns max id from leghe table
+      operationId: getMxIdLega
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+                  format: int32
+      security:
+        - api_key: []
+  /leghe:
+    get:
+      tags:
+        - leghe
+      summary: Returns all leghe
+      description: Returns all leghe
+      operationId: getAllLeghe
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Lega'          
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Lega'
+      security:
+        - api_key: []
+    post:
+      tags:
+        - leghe
+      summary: insert a new Lega
+      description: insert a new Lega
+      operationId: insertLega
+      requestBody:
+        description: Created lega object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Lega'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Lega'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Lega'
+      responses:
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:lega
+            - read:lega
+  /leghe/{id}:
+    get:
+      tags:
+        - leghe
+      summary: Returns a lega by id
+      description: Returns a lega by id
+      operationId: getLega
+      parameters:
+        - name: id
+          in: path
+          description: ID of lega to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Lega'          
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Lega'
+      security:
+        - api_key: []
+    delete:
+      tags:
+        - leghe
+      summary: delete a Lega
+      description: delete a Lega
+      operationId: deleteLega
+      parameters:
+        - name: id
+          in: path
+          description: ID of lega to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:lega
+            - read:lega
+  /leghe/mercInv/{id}:
+    patch:
+      tags:
+        - leghe
+      summary: update lega merc inv
+      description: update lega merc inv
+      operationId: updateLega
+      parameters:
+        - name: id
+          in: path
+          description: ID of lega to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Created UpdateMercatoInvernalelegaDTO object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMercatoInvernalelegaDTO'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/UpdateMercatoInvernalelegaDTO'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UpdateMercatoInvernalelegaDTO'
+      responses:
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:lega
+            - read:lega
+  /leghe/credito/{idlega}:
+    patch:
+      tags:
+        - leghe
+      summary: update credito iniziale lega
+      description: update credito iniziale lega
+      operationId: updateCreditoIni
+      parameters:
+        - name: idlega
+          in: path
+          description: ID of lega to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Created UpdateLegaDTO object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLegaDTO'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/UpdateLegaDTO'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UpdateLegaDTO'
+      responses:
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:lega
+            - read:lega
+components:
+  schemas:
+    Lega:
+      required:
+        - id
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        nameLega:
+          type: string
+          example: MatteoLega
+        adminLega:
+          type: string
+          example: Matteo
+        creditoIniziale:
+          type: integer
+          format: int64
+          example: 500
+        flgMercatoInvernale:
+          type: boolean
+          example: true
+      xml:
+        name: lega
+    UpdateMercatoInvernalelegaDTO:
+      required:
+        - id
+      type: object
+      properties:
+        flgMercatoInvernale:
+          type: boolean
+          example: true
+      xml:
+        name: updateMercatoInvernalelegaDTO
+    UpdateLegaDTO:
+      required:
+        - id
+      type: object
+      properties:
+        creditoIniziale:
+          type: integer
+          format: int64
+          example: true
+      xml:
+        name: UpdateLegaDTO
+  securitySchemes:
+    petstore_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://petstore3.swagger.io/oauth/authorize
+          scopes:
+            write:pets: modify pets in your account
+            read:pets: read your pets
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
