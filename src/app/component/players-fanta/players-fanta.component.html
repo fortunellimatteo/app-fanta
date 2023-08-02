@@ -1,0 +1,97 @@
+<div id="body" class="tableContainer">
+
+  <mat-label><h1>Lista giocatori - lega <b>{{nomeLega}}</b></h1></mat-label>
+
+  <div *ngIf="isVisibleCreditiXTeam===true" id="bodyCrediti" class="tableContainer">
+    <div *ngFor="let teamCrediti of selectTeamsXCreditiR">
+      <mat-form-field style="float: left;" class="example-full-width" appearance="fill">
+        <input disabled matInput>{{ teamCrediti.nameTeam }}
+        <input disabled matInput>{{ teamCrediti.creditoResiduo }} <br>
+        <span style="background-color: antiquewhite; margin-right: 10px;">P:{{ teamCrediti.porR }}</span>
+        <span style="background-color: chartreuse; margin-right: 10px;">D:{{ teamCrediti.difR }}</span>
+        <span style="background-color: cornflowerblue; margin-right: 10px;">C:{{ teamCrediti.cenR }}</span>
+        <span style="background-color: crimson; margin-right: 10px;">A:{{ teamCrediti.attR }}</span>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div id="bodyCrediti" class="tableContainer">
+    <button style="float: left; margin-bottom: 10px;margin-right: 10px; background-color: antiquewhite;" mat-raised-button color="" type="button" (click)="filtraRuolo('P')">Portieri</button>
+    <button style="float: left; margin-bottom: 10px;margin-right: 10px; background-color: chartreuse;" mat-raised-button color="" type="button" (click)="filtraRuolo('D')">Difensori</button>
+    <button style="float: left; margin-bottom: 10px;margin-right: 10px; background-color: cornflowerblue;" mat-raised-button color="" type="button" (click)="filtraRuolo('C')">Centrocampisti</button>
+    <button style="float: left; margin-bottom: 10px;margin-right: 10px; background-color: crimson;" mat-raised-button color="" type="button" (click)="filtraRuolo('A')">Attaccanti</button>
+    <!--<button style="float: left; margin-bottom: 10px; background-color: rgb(164, 21, 171);" mat-raised-button color="" type="button" (click)="randomLetter()">Filtra per lettera casuale</button>-->
+    <section class="example-section" style="float: left; margin-bottom: 10px;margin-right: 10px;">
+      <mat-checkbox class="example-margin" (change)="hideCreditoXTeam($event)">Nascondi Credito residuo per team</mat-checkbox>
+    </section>
+    <button style="float: right; margin-bottom: 10px;" mat-raised-button color="primary" type="button" (click)="rispristinfiltri()">Ripristina filtri</button>
+    <!--<button style="float: right; margin-bottom: 10px; background-color: rgb(220, 20, 187); margin-right: 10px;" 
+            mat-raised-button type="button" (click)="renderCrediti()">Refresh crediti</button>-->
+  </div>
+  
+    <table mat-table #tablePlayers [dataSource]="pageSlice" class="mat-elevation-z8" matSort (matSortChange)="sortData($event)">
+      <ng-container matColumnDef="R">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="R"> Ruolo </th>
+        <td mat-cell *matCellDef="let element"> 
+          <span style="background-color: antiquewhite;" *ngIf="element.r==='P'">
+            {{element.r}} 
+          </span>
+          <span style="background-color: chartreuse;" *ngIf="element.r==='D'">
+            {{element.r}} 
+          </span>
+          <span style="background-color: cornflowerblue;" *ngIf="element.r==='C'">
+            {{element.r}} 
+          </span>
+          <span style="background-color: crimson;" *ngIf="element.r==='A'">
+            {{element.r}} 
+          </span>
+        </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="Nome">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="Nome"> Giocatore </th>
+        <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="Squadra">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="Squadra"> Squadra </th>
+        <td mat-cell *matCellDef="let element"> {{element.squadra}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Team">
+        <th mat-header-cell *matHeaderCellDef> Team </th>
+        <td mat-cell *matCellDef="let element"> {{element.team}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Pagato">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="pagato"> Pagato </th>
+        <td mat-cell *matCellDef="let element"> {{element.pagato}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="btn">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element"> 
+          <button *ngIf="element.pagato===0 && element.team===''" mat-raised-button color="warn" type="button" (click)="openDialog(element.id, element.R)">Aggiorna giocatore
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator #paginator [length]="this.dt.length"
+                   [pageSize]="5"
+                   (page)="onPageChange($event)"
+                   [pageSizeOptions]="[5, 10, 25, 100]"
+                   aria-label="Select page">
+    </mat-paginator>
+
+    <div id="nextContainer" style="float: right; margin-top: 20px;">
+      <button mat-raised-button color="" style="background-color: rgb(0, 190, 0);" (click)="nextPage()">Avanti</button>
+    </div>  
+  
+    <!--<div>
+      <button mat-raised-button color="accent" type="file" (click)="goBack()">Indietro</button>
+    </div>-->
+</div>
+    

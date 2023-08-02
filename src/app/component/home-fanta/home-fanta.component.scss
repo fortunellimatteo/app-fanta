@@ -1,0 +1,71 @@
+table {
+    width: 900px;
+}
+
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+}
+  
+.example-full-width {
+    width: 100%;
+}
+
+#body {
+    width: 900px;
+    margin:auto;
+    margin-top: 50px;
+}
+
+#inputContainer {
+    width: 750px;
+    margin-top: 30px;
+}
+
+#deleteContainer {
+    width: 300px;
+    margin-top: 30px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+}
+
+.tableContainer {
+    margin: auto;
+}
+
+#clearButtonI {
+    margin-right: 10px;
+}
+
+#clearButtonD {
+    margin-right: 10px;
+}
+
+#ndt {
+    float: left;
+}
+
+#mdt {
+    margin-left: 20px;
+    float: left;
+}
+
+#bit {
+    margin-top: 10px;
+    margin-left: 20px;
+    float: left;
+}
+
+#bie {
+    margin-top: 10px;
+    float: right;
+}
+
+#nextContainer {
+    float: right;
+}

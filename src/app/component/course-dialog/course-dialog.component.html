@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Modifica giocatore</h2>
+
+<mat-dialog-content>
+  
+<!--    <mat-form-field>
+        <input matInput
+                placeholder="Course Description"
+               formControlName="description">
+    </mat-form-field>
+      ....-->
+      <mat-form-field>
+        <mat-label>Acquistato da:</mat-label>  
+        <mat-select #acquistato>
+          <mat-option value=" "> </mat-option>
+          <mat-option *ngFor="let selectTeam of selectTeams" [value]="selectTeam.nameTeam">
+            {{selectTeam.nameTeam }} - {{ selectTeam.authorTeam}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Pagato</mat-label>
+    <input matInput placeholder="34..." #pagato>
+    </mat-form-field>
+ 
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button  mat-raised-button color="" style="background-color: rgb(235, 24, 24);" (click)="close()">Chiudi</button>
+    <button  mat-raised-button color="" style="background-color: rgb(73, 235, 24);" (click)="save()">Salva</button>
+</mat-dialog-actions>

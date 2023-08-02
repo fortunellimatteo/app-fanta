@@ -1,0 +1,53 @@
+<div id="body" class="grid-container">
+    <div id="inputContainer">
+      <mat-label><h1>Crea una lega</h1></mat-label>
+    
+      <div id="ndt">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>inserisci nome lega</mat-label>
+          <input matInput placeholder="Fantalega..." #legaNome>
+        </mat-form-field>
+      </div>
+      <div id="ndt" style="margin-left: 10px;">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>inserisci nome admin</mat-label>
+          <input matInput placeholder="Matteo..." #admin>
+        </mat-form-field>
+      </div>
+  
+      <div id="bie" style="width: 300px;">
+        <button  mat-raised-button color="warn" (click)="createAndNext()">Crea lega e passa alla pagina successiva</button>
+      </div>
+    </div>
+</div>
+<div id="body" class="tableContainer" *ngIf="datasource.length > 0">
+
+  <table mat-table [dataSource]="datasource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="nameLega">
+      <th mat-header-cell *matHeaderCellDef> Nome della lega</th>
+      <td mat-cell *matCellDef="let element"> {{element.nameLega}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="adminLega">
+      <th mat-header-cell *matHeaderCellDef> Admin della lega </th>
+      <td mat-cell *matCellDef="let element"> {{element.adminLega}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="btn">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element"> 
+        <button mat-raised-button color="accent" (click)="deleteLega(element.id)">Cancella lega</button>
+        <button style="margin-left: 20px;" mat-raised-button color="primary" (click)="accediLega(element)">Accedi alla lega</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

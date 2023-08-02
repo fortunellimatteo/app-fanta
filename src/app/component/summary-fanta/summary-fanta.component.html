@@ -1,0 +1,100 @@
+<div id="body" class="tableContainer">
+    <mat-label><h1>Lista giocatori per team - lega <b>{{nomeLega}}</b></h1></mat-label>
+
+    <div *ngFor="let teamCrediti of creditiRXTeam">
+      <mat-form-field style="width: 150px !important;float: left;" class="example-full-width" appearance="fill">
+        <input disabled matInput>{{ teamCrediti.nameTeam }}
+        <input disabled matInput>{{ teamCrediti.creditoResiduo }} <br>
+      </mat-form-field>
+    </div>
+
+    <div id="inputContainer">
+      <mat-label><h1>Ricerche</h1></mat-label>
+    
+      <div id="ndt">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Giocatore</mat-label>
+          <input matInput placeholder="Higuain..." #giocatoreFiltrato
+          (keyup)="doFilterG($event)">
+        </mat-form-field>
+      </div>
+
+      <div id="ndt" style="margin-left: 10px;">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Team</mat-label>
+          <input matInput placeholder="i peppapig..." #teamFiltrato
+          (keyup)="doFilterT($event)">
+        </mat-form-field>
+      </div>
+  
+      <div id="bie">
+        <button  mat-raised-button color="warn" (click)="resetFilter()">Resetta filtro</button>
+      </div>
+      <div id="bodyCrediti" class="tableContainer">
+        <button style="float: left; margin-bottom: 10px;margin-right: 10px; background-color: rgb(215, 242, 250);"
+         mat-raised-button color="" type="button" (click)="goBack()">Home page lega</button>
+        <button style="float: left; margin-bottom: 10px;margin-right: 10px; background-color: rgb(194, 146, 223);"
+         mat-raised-button color="" type="button" (click)="goSvincolati()">Svincolati</button>
+        <button style="float: left; margin-bottom: 10px;margin-right: 10px; background-color: rgb(185, 49, 76);"
+         mat-raised-button color="" type="button" (click)="goScambi()">Scambio</button>
+        <button style="float: left; margin-bottom: 10px;margin-right: 10px; background-color: rgb(144, 203, 61);"
+         mat-raised-button color="" type="button" (click)="goEmail()">Invia rose per mail</button>
+        <!--<button style="float: left; margin-bottom: 10px;margin-right: 10px; background-color: rgb(233, 215, 250);"
+           mat-raised-button color="" type="button" (click)="creditiRimastiXTeam()">Crediti rimasti per team</button>-->
+      </div>
+    </div>
+
+    <table mat-table #tablePlayers [dataSource]="dt" class="mat-elevation-z8">
+        <ng-container matColumnDef="R">
+            <th mat-header-cell *matHeaderCellDef> Ruolo </th>
+            <td mat-cell *matCellDef="let element"> 
+              <span style="background-color: antiquewhite;" *ngIf="element.r==='P'">
+                {{element.r}} 
+              </span>
+              <span style="background-color: chartreuse;" *ngIf="element.r==='D'">
+                {{element.r}} 
+              </span>
+              <span style="background-color: cornflowerblue;" *ngIf="element.r==='C'">
+                {{element.r}} 
+              </span>
+              <span style="background-color: crimson;" *ngIf="element.r==='A'">
+                {{element.r}} 
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Nome">
+            <th mat-header-cell *matHeaderCellDef> Giocatore </th>
+            <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Squadra">
+            <th mat-header-cell *matHeaderCellDef> Squadra </th>
+            <td mat-cell *matCellDef="let element"> {{element.squadra}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Team">
+            <th mat-header-cell *matHeaderCellDef> Team </th>
+            <td mat-cell *matCellDef="let element"> {{element.team}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Pagato">
+            <th mat-header-cell *matHeaderCellDef> Pagato </th>
+            <td mat-cell *matCellDef="let element"> {{element.pagato}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="btn">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element"> 
+              <section class="example-section">
+                <button mat-raised-button style="background-color: rgb(139, 168, 223);" type="button" 
+                  (click)="svincolaGiocatore(element.id, element.team)">Svincola giocatore</button>
+                  <mat-checkbox (click)="checkScambio(element.id)" class="example-margin" #scambioG>Scambio giocatore</mat-checkbox>
+              </section>
+            </td>
+          </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

@@ -1,0 +1,74 @@
+<div id="body" class="tableContainer">
+    <mat-label><h1>Lista giocatori svincolati - lega <b>{{nomeLega}}</b></h1></mat-label>
+
+    <div id="inputContainer">
+      <mat-label><h1>Ricerche</h1></mat-label>
+    
+      <div id="ndt">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Giocatore</mat-label>
+          <input matInput placeholder="Higuain..." #giocatoreFiltrato
+          (keyup)="doFilterG($event)">
+        </mat-form-field>
+      </div>
+  
+      <div id="bie">
+        <button  mat-raised-button color="warn" (click)="resetFilter()">Resetta filtro</button>
+      </div>
+    </div>
+
+    <div *ngIf="this.teamA===null" id="bodyCrediti" class="tableContainer">
+      <button style="float: left; margin-bottom: 10px;margin-right: 10px; background-color: rgb(223, 185, 18);"
+        mat-raised-button color="" type="button" (click)="goBack()">Indietro</button>
+      <div id="backContainer">
+        <input *ngIf="flgMercatoInv===false" style="margin-left: 100px;" #inputExcel type="file" (change)="readExcel($event)"><b *ngIf="flgMercatoInv===false">Inserisci excel per mercato invernale</b>
+        <mat-chip-option #chip color="primary" selected *ngIf="excelB == true">Giocatori inseriti a sistema</mat-chip-option>
+      </div>  
+    </div>
+
+    <table mat-table #tablePlayers [dataSource]="dt" class="mat-elevation-z8">
+        <ng-container matColumnDef="R">
+            <th mat-header-cell *matHeaderCellDef> Ruolo </th>
+            <td mat-cell *matCellDef="let element"> 
+              <span style="background-color: antiquewhite;" *ngIf="element.r==='P'">
+                {{element.r}} 
+              </span>
+              <span style="background-color: chartreuse;" *ngIf="element.r==='D'">
+                {{element.r}} 
+              </span>
+              <span style="background-color: cornflowerblue;" *ngIf="element.r==='C'">
+                {{element.r}} 
+              </span>
+              <span style="background-color: crimson;" *ngIf="element.r==='A'">
+                {{element.r}} 
+              </span>
+            </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="Nome">
+            <th mat-header-cell *matHeaderCellDef> Giocatore </th>
+            <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="Squadra">
+            <th mat-header-cell *matHeaderCellDef> Squadra </th>
+            <td mat-cell *matCellDef="let element"> {{element.squadra}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="quotaI">
+            <th mat-header-cell *matHeaderCellDef> Quota iniziale </th>
+            <td mat-cell *matCellDef="let element"> {{element.quotaI}} </td>
+          </ng-container>
+    
+          <ng-container matColumnDef="btn">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element"> 
+              <button mat-raised-button style="background-color: rgb(85, 171, 211);" type="button" 
+                (click)="prendiSvincolato(element.id, element.quotaI)">Prendi svincolato</button>
+            </td>
+          </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

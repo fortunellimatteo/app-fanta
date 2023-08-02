@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Login lega - <b>{{ this.data.nome }}{{ this.data.nomenuovalega }}</b></h2>
+
+<mat-dialog-content>
+
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput placeholder="matteouser..." #username>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput placeholder="bhoooooo..." #password>
+    </mat-form-field>
+ 
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button  mat-raised-button color="" style="background-color: rgb(235, 24, 24);" (click)="close()">Chiudi</button>
+    <button  mat-raised-button color="" style="background-color: rgb(73, 235, 24);" (click)="save()">Salva</button>
+</mat-dialog-actions>
